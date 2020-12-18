@@ -1,9 +1,10 @@
-package com.example.moviesearch
+package com.example.moviesearch.views
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesearch.data.Movie
+import com.example.moviesearch.R
+import com.example.moviesearch.models.Movie
 
 /**
  * RecyclerView adapter used for [MovieListActivity]

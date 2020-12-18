@@ -1,4 +1,4 @@
-package com.example.moviesearch.data
+package com.example.moviesearch.models
 
 data class MoviePageResponse(
     val page: Int,

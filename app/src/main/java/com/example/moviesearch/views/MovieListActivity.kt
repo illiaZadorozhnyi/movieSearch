@@ -1,4 +1,4 @@
-package com.example.moviesearch
+package com.example.moviesearch.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,8 +6,10 @@ import android.util.Log
 import android.widget.ViewFlipper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesearch.data.Movie
-import com.example.moviesearch.data.MoviePageResponse
+import com.example.moviesearch.repository.MovieOperationsApi
+import com.example.moviesearch.R
+import com.example.moviesearch.models.Movie
+import com.example.moviesearch.models.MoviePageResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

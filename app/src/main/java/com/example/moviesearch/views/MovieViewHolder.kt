@@ -1,10 +1,11 @@
-package com.example.moviesearch
+package com.example.moviesearch.views
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesearch.data.Movie
+import com.example.moviesearch.R
+import com.example.moviesearch.models.Movie
 import com.squareup.picasso.Picasso
 
 

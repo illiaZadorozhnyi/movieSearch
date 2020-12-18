@@ -1,4 +1,4 @@
-package com.example.moviesearch.data
+package com.example.moviesearch.models
 
 data class Movie(
     val adult: Boolean = false,
