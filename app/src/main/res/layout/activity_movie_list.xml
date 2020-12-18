@@ -1,18 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".MovieListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movie_list_recycler"
+    <ViewFlipper
+        android:id="@+id/movies_view_flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/movie_item">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <!-- Loading Screen 0 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:textAlignment="center">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Valid Content Screen 1 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movie_list_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/movie_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <!-- Empty List Screen 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="76dp"
+                android:layout_marginTop="-25dp"
+                android:src="@drawable/movies_empty_icon" />
+
+            <TextView
+                android:id="@+id/movies_empty_text_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/empty_list_message"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:textSize="16sp"
+                android:textColor="@color/design_default_color_secondary" />
+
+        </LinearLayout>
+
+
+    </ViewFlipper>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

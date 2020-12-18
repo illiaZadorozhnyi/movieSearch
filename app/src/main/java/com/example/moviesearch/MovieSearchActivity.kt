@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import java.time.Duration
 
 const val MESSAGE = "com.example.moviesearch.MESSAGE"
 
-class SearchActivity : AppCompatActivity() {
+class MovieSearchActivity : AppCompatActivity() {
 
     private lateinit var inputField: EditText
     private lateinit var searchButton: Button
@@ -27,10 +29,14 @@ class SearchActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             val text = inputField.text.toString()
 
-            val intent = Intent(this, MovieListActivity::class.java).apply {
-                putExtra(MESSAGE, text)
+            if(text.isNotEmpty()){
+                val intent = Intent(this, MovieListActivity::class.java).apply {
+                    putExtra(MESSAGE, text)
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Movie name missing...", Toast.LENGTH_LONG).show()
             }
-            startActivity(intent)
         }
     }
 

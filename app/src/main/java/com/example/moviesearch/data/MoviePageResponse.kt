@@ -1,6 +1,6 @@
 package com.example.moviesearch.data
 
-data class MoviePagesResponse(
+data class MoviePageResponse(
     val page: Int,
     val results: List<Movie> = listOf(),
     val total_pages: Int,

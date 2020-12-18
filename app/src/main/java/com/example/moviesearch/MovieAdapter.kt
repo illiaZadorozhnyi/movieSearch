@@ -25,8 +25,16 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
     }
 
     fun setData(list: List<Movie>) {
-        movieList = list
-        notifyDataSetChanged()
+        if(list.isNotEmpty()) {
+            movieList = list
+            notifyDataSetChanged()
+        } else {
+            handleEmptyList()
+        }
+    }
+
+    private fun handleEmptyList() {
+
     }
 
 }
