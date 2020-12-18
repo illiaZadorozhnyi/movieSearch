@@ -14,12 +14,18 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Activity that shows list of items on successful retrieval via api,
+ * progress bar while items are being retrieved and empty screen in case if search term is invalid
+ */
 class MovieListActivity : AppCompatActivity() {
 
     companion object {
         private const val DISPLAY_PROGRESS = 0
         private const val DISPLAY_LIST_MOVIES = 1
         private const val DISPLAY_EMPTY_MOVIES = 2
+        private const val MESSAGE = "com.example.moviesearch.MESSAGE"
+        private const val TAG = "MovieListActivity"
     }
 
     private lateinit var movies: List<Movie>
@@ -29,7 +35,6 @@ class MovieListActivity : AppCompatActivity() {
 
     private var viewFlipper: ViewFlipper? = null
 
-    private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +42,12 @@ class MovieListActivity : AppCompatActivity() {
         display(DISPLAY_PROGRESS)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val message: String = intent.getStringExtra(MESSAGE) ?: ""
+        val message = intent.getStringExtra(MESSAGE) ?: ""
         viewFlipper = findViewById(R.id.movies_view_flipper)
 
         initViews()
-
         retrieveMovies(message)
-
     }
-
 
 
     private fun initViews() {
@@ -55,35 +57,35 @@ class MovieListActivity : AppCompatActivity() {
         recyclerView.layoutManager = linearLayoutManager
     }
 
-    private fun retrieveMovies(searchedMovie: String) {
+    private fun retrieveMovies(searchTerm: String) {
+        val apiKey = resources.getString(R.string.apiKey)
+
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        val movieRetrievalApi = retrofit.create(MovieRetrievalApi::class.java)
-
-        val request: Call<MoviePageResponse> =
-            movieRetrievalApi.getMovies("d6113656d15b4a7ecface03b44f31731", searchedMovie)
-
-        Log.d(TAG, "full Url: " + request.request().url())
+        val movieRetrievalApi = retrofit.create(MovieOperationsApi::class.java)
+        val request: Call<MoviePageResponse> = movieRetrievalApi.getMovies(apiKey, searchTerm)
 
         request.enqueue(object : Callback<MoviePageResponse> {
             override fun onFailure(call: Call<MoviePageResponse>?, t: Throwable?) {
                 Log.d(TAG, "onFailure: $t.message")
             }
 
-            override fun onResponse(call: Call<MoviePageResponse>?, response: Response<MoviePageResponse>?) {
+            override fun onResponse(
+                call: Call<MoviePageResponse>?,
+                response: Response<MoviePageResponse>?
+            ) {
                 Log.d(TAG, "onSuccess: $response")
                 if (response?.isSuccessful != true) {
                     return
                 }
 
                 val successfulResponse = response.body()
-                val listOfMovies: List<Movie>? = successfulResponse?.results
+                val listOfMovies = successfulResponse?.results
 
-                if(listOfMovies!!.isNotEmpty()) {
-                    movies = listOfMovies ?: listOf()
+                if (listOfMovies!!.isNotEmpty()) {
+                    movies = listOfMovies
                     adapter = MovieAdapter()
                     adapter.setData(movies)
                     recyclerView.adapter = adapter

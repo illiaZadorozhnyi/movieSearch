@@ -8,9 +8,16 @@ import android.widget.EditText
 import android.widget.Toast
 import java.time.Duration
 
-const val MESSAGE = "com.example.moviesearch.MESSAGE"
 
+
+/**
+ * Starting activity containing input field and button to trigger search
+ */
 class MovieSearchActivity : AppCompatActivity() {
+
+    companion object {
+        const val MESSAGE = "com.example.moviesearch.MESSAGE"
+    }
 
     private lateinit var inputField: EditText
     private lateinit var searchButton: Button

@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearch.data.Movie
 
+/**
+ * RecyclerView adapter used for [MovieListActivity]
+ */
 class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
 
     private var movieList: List<Movie> = listOf()
@@ -25,16 +28,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieViewHolder>() {
     }
 
     fun setData(list: List<Movie>) {
-        if(list.isNotEmpty()) {
-            movieList = list
-            notifyDataSetChanged()
-        } else {
-            handleEmptyList()
-        }
+        movieList = list
+        notifyDataSetChanged()
     }
-
-    private fun handleEmptyList() {
-
-    }
-
 }

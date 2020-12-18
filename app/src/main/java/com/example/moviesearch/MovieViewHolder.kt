@@ -7,9 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesearch.data.Movie
 import com.squareup.picasso.Picasso
 
-private const val IMAGE_RETRIEVAL_BASE_URL = "https://image.tmdb.org/t/p/w500/"
 
+/**
+ * ViewHolder class for [MovieAdapter] that handles binding of text and image for each item.
+ */
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    companion object {
+        private const val IMAGE_RETRIEVAL_BASE_URL = "https://image.tmdb.org/t/p/w500/"
+    }
 
     private val title: TextView = itemView.findViewById(R.id.movie_title)
     private val overview: TextView = itemView.findViewById(R.id.movie_overview)
