@@ -16,6 +16,13 @@ Showcases usage of:
 - Gson
 - Picasso
 
----
-Please add your api key into local.properties before running (apiKey=<yourApiKey>)
----
+### Demo
+#### Valid Search
+![valid_search](https://user-images.githubusercontent.com/36864058/102680349-666ff080-4185-11eb-98cf-52838eb439b5.gif)
+
+### Invalid Search
+![invalid_search](https://user-images.githubusercontent.com/36864058/102680410-d5e5e000-4185-11eb-9d40-48eeadce5d4b.gif)
+
+
+- Please add your api key into local.properties before running (apiKey=<yourApiKey>)
+
