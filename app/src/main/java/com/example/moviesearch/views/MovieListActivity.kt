@@ -1,8 +1,12 @@
 package com.example.moviesearch.views
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import android.widget.ViewFlipper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,13 +27,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MovieListActivity : AppCompatActivity() {
 
     companion object {
-        private const val DISPLAY_PROGRESS = 0
-        private const val DISPLAY_LIST_MOVIES = 1
-        private const val DISPLAY_EMPTY_MOVIES = 2
-        private const val MESSAGE = "com.example.moviesearch.MESSAGE"
+        private const val DISPLAY_EMPTY_MOVIES = 0
+        private const val DISPLAY_PROGRESS = 1
+        private const val DISPLAY_LIST_MOVIES = 2
         private const val TAG = "MovieListActivity"
+
     }
 
+    private lateinit var inputField: EditText
+    private lateinit var searchButton: Button
     private lateinit var movies: List<Movie>
     private lateinit var adapter: MovieAdapter
     private lateinit var recyclerView: RecyclerView
@@ -41,14 +47,13 @@ class MovieListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-        display(DISPLAY_PROGRESS)
+        display(DISPLAY_EMPTY_MOVIES)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val message = intent.getStringExtra(MESSAGE) ?: ""
         viewFlipper = findViewById(R.id.movies_view_flipper)
+        adapter = MovieAdapter()
 
         initViews()
-        retrieveMovies(message)
+        setOnClickListener()
     }
 
 
@@ -57,7 +62,12 @@ class MovieListActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
+
+        inputField = findViewById(R.id.input_field)
+        searchButton = findViewById(R.id.button_search)
+        searchButton.text = "SEARCH"
     }
+
 
     private fun retrieveMovies(searchTerm: String) {
         val apiKey = resources.getString(R.string.apiKey)
@@ -88,7 +98,6 @@ class MovieListActivity : AppCompatActivity() {
 
                 if (listOfMovies!!.isNotEmpty()) {
                     movies = listOfMovies
-                    adapter = MovieAdapter()
                     adapter.setData(movies)
                     recyclerView.adapter = adapter
                     display(DISPLAY_LIST_MOVIES)
@@ -102,6 +111,18 @@ class MovieListActivity : AppCompatActivity() {
     private fun display(which: Int) {
         if (viewFlipper?.displayedChild != which) {
             viewFlipper?.displayedChild = which
+        }
+    }
+
+    private fun setOnClickListener() {
+        searchButton.setOnClickListener {
+            val text = inputField.text.toString()
+
+            if(text.isNotEmpty()){
+                retrieveMovies(text)
+            } else {
+                Toast.makeText(this, "Movie name missing...", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
